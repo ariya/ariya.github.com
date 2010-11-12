@@ -1,25 +1,25 @@
 <html><head><title>Kinetic Scrolling</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="viewport" content="width=320; initial-scale=1.0; user-scalable=no;">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; user-scalable=no;">
 <script src="KineticModel.js"></script>
 <script>
-window.addEventListener("load", function() {
-    setTimeout(function () {
+window.addEventListener("load", function () {
+    window.setTimeout(function () {
         window.scrollTo(0, 1);
 
-        var refpos = null;
-        var offset = 0;
+        var refPos = 0, offset = 0, el, maxofs, vertical;
 
-        var el = document.getElementById('container');
-        var maxofs = window.getComputedStyle(el).height.replace('px','') - window.innerHeight;
+        el = document.getElementById('container');
+        maxofs = window.getComputedStyle(el).height.replace('px', '');
+        maxofs -= window.innerHeight;
 
-        var vertical = new KineticModel(0, maxofs, function(y){
-            var el = document.getElementById('container');
+        vertical = new KineticModel(0, maxofs, function (y) {
+            var el = window.document.getElementById('container');
             el.style.webkitTransform = 'translateY(-' + y + 'px)';
             offset = y;
         });
 
-        el.addEventListener('touchstart', function(e) {
+        el.addEventListener('touchstart', function (e) {
             if (e.targetTouches.length >= 1) {
                 refPos = e.targetTouches[0].clientY;
                 e.preventDefault();
@@ -28,7 +28,7 @@ window.addEventListener("load", function() {
             }
         });
 
-        el.addEventListener('touchmove', function(e) {
+        el.addEventListener('touchmove', function (e) {
             if (e.targetTouches.length >= 1) {
                 var delta = refPos - e.targetTouches[0].clientY;
                 if (delta > 2 || delta < -2) {
@@ -41,10 +41,10 @@ window.addEventListener("load", function() {
             }
         });
 
-        el.addEventListener('touchend', function(e) {
-              vertical.release();
-              e.preventDefault();
-              e.stopPropagation();
+        el.addEventListener('touchend', function (e) {
+            vertical.release();
+            e.preventDefault();
+            e.stopPropagation();
         });
 
     }, 0);
