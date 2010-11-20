@@ -14,14 +14,12 @@ start = function() {
 
 stop  = function() {
     clearInterval(timer);
-    tick = 0;
-    document.getElementById('d').textContent = tick;
 }
 </script>
 <body>
 <div style="text-align: center">
 <p id="d">0</p>
-<input type="button" onclick="start()" value="Start">
+<input type="button" onclick="tick = 0; start()" value="Start">
 <input type="button" onclick="stop()" value="Stop">
 </div>
 </body>
