@@ -1,0 +1,19 @@
+<html><head><title>Detect support for touch events</title>
+<meta name="viewport" content="width=device-width; initial-scale=1.0; user-scalable=no;">
+<script>
+supportTouch = function () {
+    try {
+        document.createEvent('TouchEvent');
+        return true;
+    } catch (e) {
+        return false;
+    }
+};
+</script>
+<body>
+<script>
+document.write('<p>Support touch events: <b>' + supportTouch() + '</b>.</p>');
+document.write('<p>User agent: ' + navigator.userAgent + '</p>');
+</script>
+</body>
+</html>
