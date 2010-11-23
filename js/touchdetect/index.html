@@ -2,12 +2,15 @@
 <meta name="viewport" content="width=device-width; initial-scale=1.0; user-scalable=no;">
 <script>
 supportTouch = function () {
+    var s = false;
     try {
         document.createEvent('TouchEvent');
-        return true;
+        s = ('ontouchstart' in document.body) &&
+            ('ontouchend' in document.body) &&
+            ('ontouchmove' in document.body);
     } catch (e) {
-        return false;
     }
+    return s;
 };
 </script>
 <body>
