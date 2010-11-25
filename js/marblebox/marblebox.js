@@ -155,18 +155,18 @@ window.setTimeout(function() {
         }, false);
     }
 
-    if ('ondeviceorientation' in window) {
-        window.addEventListener('deviceorientation', function (e) {
-            b.world.m_gravity.x = e.gamma * 8;
-            b.world.m_gravity.y = e.beta * 14;
-        }, false);
-    }
-
     if ('ondevicemotion' in window) {
         window.addEventListener('devicemotion', function (e) {
             b.world.m_gravity.x = e.accelerationIncludingGravity.x * 40;
             b.world.m_gravity.y = -e.accelerationIncludingGravity.y * 40;
         }, false);
+    } else {
+        if ('ondeviceorientation' in window) {
+            window.addEventListener('deviceorientation', function (e) {
+                b.world.m_gravity.x = e.gamma * 8;
+                b.world.m_gravity.y = e.beta * 14;
+            }, false);
+        }
     }
 
     b.run(function(m) {
