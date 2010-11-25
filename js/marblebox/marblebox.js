@@ -160,13 +160,13 @@ window.setTimeout(function() {
             b.world.m_gravity.x = e.gamma * 8;
             b.world.m_gravity.y = e.beta * 14;
         }, false);
-    } else {
-        if ('ondevicemotion' in window) {
-            window.addEventListener('devicemotion', function (e) {
-                b.world.m_gravity.x = e.accelerationIncludingGravity.x * 40;
-                b.world.m_gravity.y = -e.accelerationIncludingGravity.y * 40;
-            }, false);
-        }
+    }
+
+    if ('ondevicemotion' in window) {
+        window.addEventListener('devicemotion', function (e) {
+            b.world.m_gravity.x = e.accelerationIncludingGravity.x * 40;
+            b.world.m_gravity.y = -e.accelerationIncludingGravity.y * 40;
+        }, false);
     }
 
     b.run(function(m) {
