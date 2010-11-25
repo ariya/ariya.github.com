@@ -1,0 +1,34 @@
+<html><head><title>Marbles in a box</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; user-scalable=no;">
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  font-family: Helvetica, Arial;
+}
+
+* {
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -webkit-text-size-adjust: none;
+}
+
+.container {
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateY(0);
+}
+</style>
+</head>
+<body>
+<div id='container'>
+<p id='text' style="height: 100%; text-align: center; color: white;">Box of Marbles (by <a style="color:white" href="http://ariya.blogspot.com">Ariya</a>)</p>
+</div>
+<script src="protoclass.js"></script>
+<script src="box2d.js"></script>
+<script src="marblebox.js"></script>
+</body>
+</html>
