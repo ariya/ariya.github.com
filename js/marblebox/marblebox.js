@@ -168,7 +168,7 @@ window.setTimeout(function () {
         }
         el = document.createElement('div');
         el.className = 'tap';
-        el.id = 'tap';
+        el.id = 'mtap';
         el.style.borderColor = color;
         el.style.left = x + window.innerWidth / 2;
         el.style.top = y + window.innerHeight / 2;
@@ -178,7 +178,7 @@ window.setTimeout(function () {
             el.style.webkitTransform = el.style.OTransfrom = el.style.MozTransform = t;
         }, 0);
         window.setTimeout(function (){
-            document.body.removeChild(el);
+            document.body.removeChild(document.getElementById('mtap'));
         }, 150);
     }
 
