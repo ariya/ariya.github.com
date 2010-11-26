@@ -33,42 +33,54 @@ function Box(width, height) {
     this.dim = 15;
     this.marbles = [];
 
-    var extra = 100;
     var worldAABB = new b2AABB();
-    worldAABB.minVertex.Set(-extra, -extra);
-    worldAABB.maxVertex.Set(width + extra, height + extra);
-    this.world = new b2World(worldAABB, new b2Vec2(0, 1000), true);
+    worldAABB.minVertex.Set(-width * 4, -height * 4);
+    worldAABB.maxVertex.Set(width * 4, height * 4);
+    this.world = new b2World(worldAABB, new b2Vec2(0, 1 * 1000), true);
 
-    var createSlab = function (world, x, y, w, h) {
-        var boxSd = new b2BoxDef();
+    this.resize(width, height);
+}
+
+Box.prototype.resize = function (width, height) {
+    function createBox(world, x, y, w, h) {
+        var boxSd = new b2BoxDef(),
+            boxBd = new b2BodyDef();
         boxSd.extents.Set(w, h);
-        var boxBd = new b2BodyDef();
         boxBd.AddShape(boxSd);
         boxBd.position.Set(x, y);
-        world.CreateBody(boxBd);
+        return world.CreateBody(boxBd);
     }
 
-    createSlab(this.world, 0, height + extra - this.dim, width, extra);
-    createSlab(this.world, 0, -extra - this.dim, width, extra);
+    if (typeof this.topWall !== 'undefined') {
+        this.world.DestroyBody(this.topWall);
+        this.world.DestroyBody(this.bottomWall);
+        this.world.DestroyBody(this.leftWall);
+        this.world.DestroyBody(this.rightWall);
+    }
 
-    createSlab(this.world, -extra - this.dim, 0, extra, height);
-    createSlab(this.world, width + extra - this.dim, 0, extra, height);
+    var slab = 100;
+    this.width = width;
+    this.height = height;
+    this.topWall = createBox(this.world, -width / 2, -height / 2 - slab, width, slab);
+    this.bottomWall = createBox(this.world, -width / 2, height / 2 + slab, width, slab);
+    this.leftWall = createBox(this.world, -width / 2 - slab, -height / 2, slab, height);
+    this.rightWall = createBox(this.world, width / 2 + slab, -height / 2, slab, height);
 
     return this;
 };
 
-Box.prototype.addMarble = function(x, y, c) {
-    x += Math.random() * 10 - 5;
-    var circleSd = new b2CircleDef();
+Box.prototype.addMarble = function (x, y, c) {
+    var circleSd = new b2CircleDef(),
+        circleBd = new b2BodyDef(),
+        marble = {};
+
     circleSd.density = 1.0;
     circleSd.radius = this.dim;
     circleSd.restitution = 0.6;
     circleSd.friction = 0;
-    var circleBd = new b2BodyDef();
     circleBd.AddShape(circleSd);
-    circleBd.position.Set(x, y);
+    circleBd.position.Set(x + Math.random() * 20 - 10, y);
 
-    var marble = {};
     marble.body = this.world.CreateBody(circleBd);
     marble.radius = circleSd.radius;
     marble.color = c;
@@ -77,19 +89,21 @@ Box.prototype.addMarble = function(x, y, c) {
     return marble;
 };
 
-Box.prototype.run = function(update) {
-    var frameRate = 30;
-    var that = this;
+Box.prototype.run = function (update) {
+    var that = this,
+        frameRate = ('ontouchstart' in window) ? 30 : 60;
 
-    window.setInterval(function() {
+    window.setInterval(function () {
         that.world.Step(1 / frameRate, 1);
-        that.marbles.forEach(function(m) {
+        that.marbles.forEach(function (m) {
             m.x = Math.round(m.body.m_position.x);
             m.y = Math.round(m.body.m_position.y);
             update(m);
         });
     }, 1000 / frameRate);
 };
+
+// http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
 
 /**
  * Converts an HSL color value to RGB. Conversion formula
@@ -127,38 +141,81 @@ function hslToRgb(h, s, l) {
     return [r * 255, g * 255, b * 255];
 }
 
-function randomColor() {
-    var rgb = hslToRgb(Math.random(), 0.8, 0.5);
-    return 'rgba(' + Math.round(rgb[0]) + ',' + Math.round(rgb[1]) + ',' + Math.round(rgb[2]) + ', 1)';
-}
-
-window.setTimeout(function() {
+window.setTimeout(function () {
     var b = new Box(window.innerWidth, window.innerHeight);
-    b.addMarble(b.width / 2, b.height / 2, 'yellow');
+    b.addMarble(0, 0, 'yellow');
+
+    function randomColor() {
+        var rgb = hslToRgb(Math.random(), 0.8, 0.5);
+        return 'rgba(' + Math.round(rgb[0]) + ',' + Math.round(rgb[1]) + ',' + Math.round(rgb[2]) + ', 1)';
+    }
+
+    function addMarble(x, y) {
+        var angle = +window.orientation,
+            color = randomColor(),
+            el = document.getElementById('tap');
+        if (angle === 0 || typeof window.orientation === 'undefined') {
+            b.addMarble(x, y, color);
+        } else if (angle == 90) {
+            b.addMarble(-y, x, color);
+        } else if (angle == 180) {
+            b.addMarble(-x, -y, color);
+        } else if (angle == -90) {
+            b.addMarble(y, -x, color);
+        }
+        if (el) {
+            document.body.removeChild(el);
+        }
+        el = document.createElement('div');
+        el.className = 'tap';
+        el.id = 'tap';
+        el.style.borderColor = color;
+        el.style.left = x + window.innerWidth / 2;
+        el.style.top = y + window.innerHeight / 2;
+        document.body.appendChild(el);
+        window.setTimeout(function (){
+            var t = 'translate(-100px,-100px) scale(0, 0)';
+            el.style.webkitTransform = el.style.OTransfrom = el.style.MozTransform = t;
+        }, 0);
+        window.setTimeout(function (){
+            document.body.removeChild(el);
+        }, 150);
+    }
 
     if ('ontouchstart' in window) {
         var el = document.getElementById('text');
         el.addEventListener('touchstart', function (e) {
             if (e.targetTouches.length >= 1) {
-                var x = e.targetTouches[0].clientX;
-                var y = e.targetTouches[0].clientY;
-                b.addMarble(x, y, randomColor());
+                var x = e.targetTouches[0].clientX - window.innerWidth / 2;
+                var y = e.targetTouches[0].clientY - window.innerHeight / 2;
+                addMarble(x, y);
             }
             e.preventDefault();
             e.stopPropagation();
         }, false);
     } else {
         window.addEventListener('mousedown', function (e) {
-            b.addMarble(e.clientX, e.clientY, randomColor());
+            var x = e.clientX - window.innerWidth / 2;
+            var y = e.clientY - window.innerHeight / 2;
+            addMarble(x, y);
             e.preventDefault();
             e.stopPropagation();
         }, false);
     }
 
+    window.addEventListener('resize', function (e) {
+        var angle = +window.orientation;
+        if (angle === 0 || angle === 180 || typeof window.orientation === 'undefined') {
+            b.resize(window.innerWidth, window.innerHeight);
+        } else {
+            b.resize(window.innerHeight, window.innerWidth);
+        }
+    }, false);
+
     if ('ondevicemotion' in window) {
         window.addEventListener('devicemotion', function (e) {
-            b.world.m_gravity.x = e.accelerationIncludingGravity.x * 40;
-            b.world.m_gravity.y = -e.accelerationIncludingGravity.y * 40;
+            b.world.m_gravity.x = 1 *e.accelerationIncludingGravity.x * 40;
+            b.world.m_gravity.y = 1 * -e.accelerationIncludingGravity.y * 40;
         }, false);
     } else {
         if ('ondeviceorientation' in window) {
@@ -170,23 +227,34 @@ window.setTimeout(function() {
     }
 
     b.run(function(m) {
-        var el = document.getElementById(m.id);
+        var el = document.getElementById(m.id),
+            angle = +window.orientation;
+
         if (el === null) {
-            var el = document.createElement('div');
+            el = document.createElement('div');
             el.style.position = 'absolute';
-            el.style.left = m.x + 'px';
-            el.style.top = m.y + 'px';
             el.style.width = 2 * m.radius + 'px';
             el.style.height = 2 * m.radius + 'px';
             el.style.backgroundColor = m.color;
-            el.style.webkitBorderRadius = m.radius + 'px';
             el.style.borderRadius = m.radius + 'px';
             el.style.webkitTransform = 'translate3d(0,0,0)';
             el.id = m.id;
             document.body.appendChild(el);
-        } else {
-            el.style.left = Math.round(m.x) + 'px';
-            el.style.top = Math.round(m.y) + 'px';
+        }
+
+        if (angle === 0 || typeof window.orientation === 'undefined') {
+            el.style.left = Math.round(-m.radius + window.innerWidth / 2 + m.x) + 'px';
+            el.style.top = Math.round(-m.radius + window.innerHeight / 2 + m.y) + 'px';
+        } else if (angle == 90) {
+            el.style.left = Math.round(-m.radius + window.innerWidth / 2 + m.y) + 'px';
+            el.style.top = Math.round(-m.radius + window.innerHeight / 2 - m.x) + 'px';
+        } else if (angle == 180) {
+            el.style.left = Math.round(-m.radius + window.innerWidth / 2 - m.x) + 'px';
+            el.style.top = Math.round(-m.radius + window.innerHeight / 2 - m.y) + 'px';
+        } else if (angle == -90) {
+            el.style.left = Math.round(-m.radius + window.innerWidth / 2 - m.y) + 'px';
+            el.style.top = Math.round(-m.radius + window.innerHeight / 2 + m.x) + 'px';
         }
     });
+
 }, 0);
