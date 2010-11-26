@@ -257,4 +257,9 @@ window.setTimeout(function () {
         }
     });
 
+    window.setTimeout(function () {
+        var el = document.getElementById('hint');
+        el.style.opacity = 0.0;
+        el.style.visibility = 'hidden';
+    }, 1000);
 }, 0);

@@ -42,6 +42,24 @@ body {
   -o-transform: scale(0,0);
 }
 
+#hint {
+  position: absolute;
+  left: 0px;
+  top: 100px;
+  width: 100%;
+  color: #999;
+  text-align: center;
+  font-size: 1em;
+  -webkit-transition: all 3s ease-out;
+  -moz-transition: all 3s ease-out;
+  -o-transition: all 3s ease-out;
+}
+
+#hint img {
+  vertical-align: middle;
+  width: 5em;
+}
+
 </style>
 </head>
 <body>
@@ -49,5 +67,7 @@ body {
 <script src="protoclass.js"></script>
 <script src="box2d.js"></script>
 <script src="marblebox.js"></script>
+<!-- http://www.openclipart.org/detail/89947 -->
+<div id='hint'><img src='pointing_finger_01.png'>Tap to add some marbles!</div>
 </body>
 </html>
