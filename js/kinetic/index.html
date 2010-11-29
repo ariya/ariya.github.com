@@ -6,9 +6,6 @@
 window.addEventListener("load", function () {
     window.setTimeout(function () {
 
-        // Hide the address bar on Android
-        window.scrollTo(0, 1);
-
         var pressed = false, refPos = 0, offset = 0, el, maxofs, vertical;
 
         el = document.getElementById('container');
@@ -780,6 +777,10 @@ embraced the gallant vessel on its course and wrecked it&mdash;thus!
 </div>
 
 </div>
+
+<script>
+window.scrollTo(0, 1);
+</script>
 
 </body>
 </html>
