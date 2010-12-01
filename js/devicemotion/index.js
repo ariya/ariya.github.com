@@ -15,21 +15,21 @@ Ext.setup({
                         xtype: 'sliderfield',
                         label: 'X',
                         id: 'X',
-                        disabled: false,
+                        disabled: true,
                         minValue: -100,
                         maxValue: 100
                     }, {
                         xtype: 'sliderfield',
                         label: 'Y',
                         id: 'Y',
-                        disabled: false,
+                        disabled: true,
                         minValue: -100,
                         maxValue: 100
                     }, {
                         xtype: 'sliderfield',
                         label: 'Z',
                         id: 'Z',
-                        disabled: false,
+                        disabled: true,
                         minValue: -100,
                         maxValue: 100
                     }]
