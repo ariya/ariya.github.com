@@ -1,0 +1,33 @@
+<html><head><title>Android: touch even and painting quality</title>
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;">
+<style>
+p { text-align: center; }
+* {
+    -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -webkit-text-size-adjust: none;
+}
+
+body{
+    overflow: hidden;
+}
+.container {
+    overflow: hidden;
+}
+
+.pattern {
+    background-image: url(pattern.png);
+    -webkit-transform: rotate(13deg) scale(7.7) skew(5deg);
+    height: 100%;
+}
+</style>
+</head>
+<body>
+<p>Touch the screen <i>anywhere</i> and watch what happens with the pattern!</p>
+<div class='container'>
+<div class='pattern'>
+</div>
+</div>
+</body>
+</html>
