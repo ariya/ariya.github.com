@@ -4,35 +4,38 @@
 window.addEventListener("load", function () {
     window.setTimeout(function () {
         var round = function (x) {
-            return Math.round(x * 100) / 100.0;
+            return (x === null) ? null : Math.round(x * 100) / 100.0;
         };
 
         if ('ondevicemotion' in window) {
-            document.getElementById('support').innerHTML = 'Yes';
+            document.getElementById('motion-support').innerHTML = 'Yes';
             window.addEventListener('devicemotion', function (e) {
                 var s = '<br>x: ' + round(e.accelerationIncludingGravity.x) +
                     '<br>y: ' + round(e.accelerationIncludingGravity.y) +
                     '<br>z: ' + round(e.accelerationIncludingGravity.z);
-                document.getElementById('status').innerHTML = s;
+                document.getElementById('motion-status').innerHTML = s;
             }, false);
-        } else {
-            if ('ondeviceorientation' in window) {
-                document.getElementById('support').innerHTML = 'Yes';
-                window.addEventListener('deviceorientation', function (e) {
-                    var s = '<br>Alpha: ' + round(e.alpha) +
-                        '<br>Beta: ' + round(e.beta) +
-                        '<br>Gamma: ' + round(e.gamma);
-                    document.getElementById('status').innerHTML = s;
-                }, false);
-            }
+        }
+
+        if ('ondeviceorientation' in window) {
+            document.getElementById('orientation-support').innerHTML = 'Yes';
+            window.addEventListener('deviceorientation', function (e) {
+                var s = '<br>Alpha: ' + round(e.alpha) +
+                    '<br>Beta: ' + round(e.beta) +
+                    '<br>Gamma: ' + round(e.gamma);
+                document.getElementById('orientation-status').innerHTML = s;
+            }, false);
         }
     }, 0);
 }, false);
 </script>
 </head>
 <body>
-<p>Support for accelerometer: <b><span id="support">No</span>.</b></p>
-<p>Current acceleration: <b><span id="status">Unknown.</span></b></p>
+<p>Support for device orientation: <b><span id="orientation-support">No</span>.</b></p>
+<p>Current device orientation: <b><span id="orientation-status">Unknown.</span></b></p>
+<p>Support for device motion: <b><span id="motion-support">No</span>.</b></p>
+<p>Current device motion: <b><span id="motion-status">Unknown.</span></b></p>
+<p><p>
 <p>User agent:
 <script>document.write(navigator.userAgent);</script>
 </p>
