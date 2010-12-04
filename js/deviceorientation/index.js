@@ -16,8 +16,8 @@ Ext.setup({
                         label: 'Alpha',
                         id: 'Alpha',
                         disabled: true,
-                        minValue: -180,
-                        maxValue: 180
+                        minValue: 0,
+                        maxValue: 360
                     }, {
                         xtype: 'sliderfield',
                         label: 'Beta',
@@ -30,8 +30,8 @@ Ext.setup({
                         label: 'Gamma',
                         id: 'Gamma',
                         disabled: true,
-                        minValue: -180,
-                        maxValue: 180
+                        minValue: -90,
+                        maxValue: 90
                     }]
                 }]
             }]
