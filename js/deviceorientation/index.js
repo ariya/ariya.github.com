@@ -16,22 +16,22 @@ Ext.setup({
                         label: 'Alpha',
                         id: 'Alpha',
                         disabled: true,
-                        minValue: 0,
-                        maxValue: 360
+                        minValue: -180,
+                        maxValue: 180
                     }, {
                         xtype: 'sliderfield',
                         label: 'Beta',
                         id: 'Beta',
                         disabled: true,
-                        minValue: -180,
-                        maxValue: 180
+                        minValue: -90,
+                        maxValue: 90
                     }, {
                         xtype: 'sliderfield',
                         label: 'Gamma',
                         id: 'Gamma',
                         disabled: true,
-                        minValue: -90,
-                        maxValue: 90
+                        minValue: -180,
+                        maxValue: 180
                     }]
                 }]
             }]
