@@ -1,12 +1,19 @@
 <html><head><title>navigator object</title>
 <meta name="viewport" content="width=device-width; maximum-scale=1.0; initial-scale=1.0; user-scalable=no;">
-<body>
+<body style="overflow: hidden">
+<div style="height: 120%; width: 120%"><p>Hold on a second...</p></div>
 <script>
-document.write('<p><b>navigator.platform</b>: ' + navigator.platform + '</p>');
-document.write('<p><b>navigator.userAgent</b>: ' + navigator.userAgent + '</p>');
-document.write('<p></p>');
-document.write('<p><b>screen.width</b>: ' + screen.width + '</p>');
-document.write('<p><b>screen.height</b>: ' + screen.height + '</p>');
+window.setTimeout(function() {
+    document.open();
+    document.write('<p><b>navigator.platform</b>: ' + navigator.platform + '<br>');
+    document.write('<b>navigator.userAgent</b>: ' + navigator.userAgent + '</p>');
+    document.write('<p><b>screen.width</b>: ' + screen.width + '<br>');
+    document.write('<b>screen.height</b>: ' + screen.height + '</p>');
+    document.write('<p><b>window.innerWidth</b>: ' + window.innerWidth + '<br>');
+    document.write('<b>window.innerHeight</b>: ' + window.innerHeight + '</p>');
+    document.write('<p><b>window.devicePixelRatio</b>: ' + window.devicePixelRatio + '</p>');
+    document.close();
+}, 500);
 </script>
 </body>
 </html>
