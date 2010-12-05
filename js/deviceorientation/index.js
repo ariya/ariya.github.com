@@ -41,7 +41,7 @@ Ext.setup({
 
         if (!('ondeviceorientation' in window)) {
             setTimeout(function() {
-                Ext.Msg.alert('Not available', 'You need iOS 4.2 device with acceleration API.');
+                Ext.Msg.alert('Not available', 'Your browser do not support device orientation.');
             }, 200);
         } else {
             var orientation;
