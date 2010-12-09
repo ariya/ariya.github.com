@@ -1,9 +1,22 @@
-<html><head><title>whatistomorrow</title>
+<html manifest="index.manifest"><head><title>Tomorrow</title>
+
+<!-- http://www.openclipart.org/detail/78139 -->
+<link rel="apple-touch-icon" href="tomorrow.png"/>
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale= 1.0; user-scalable=no;">
+<style>
+body, p { font-family: Helvetica, Arial; background-color: #333; color: #888; }
+h1 { font-size: 4em; text-shadow: #ccc 0px -1px 0px;}
+</style>
 </head>
 <body>
-<h1 style="margin-top: 15%; text-align: center">Tomorrow is 
-<script>document.write(new Date(Date.now() + (24 * 60 * 60 * 1000)).toDateString());</script>
-</h1>
+<div style="margin-top: 15%; text-align: center"><p>Tomorrow is</p><h1 id="t"> </h1></div>
+<script>
+var u = function() { document.getElementById('t').innerText = (new Date(Date.now() + (24 * 60 * 60 * 1000)).toDateString()); }
+window.setInterval(u, 1000 * 60 * 60);
+u();
+</script>
 </body>
 </html>
