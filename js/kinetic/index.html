@@ -1,4 +1,4 @@
-<html><head><title>Kinetic Scrolling</title>
+<html><head><title>Kinetic</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="viewport" content="width=device-width; initial-scale=1.0; user-scalable=no;">
 <script src="KineticModel.js"></script>
@@ -14,7 +14,7 @@ window.addEventListener("load", function () {
 
         vertical = new KineticModel(0, maxofs, function (y) {
             var s = window.document.getElementById('container').style;
-            s.webkitTransform = s.MozTransform = s.OTransform = 'translateY(-' + y + 'px)';
+            s.webkitTransform = s.MozTransform = s.OTransform = 'translateY(-' + Math.floor(y) + 'px)';
             offset = y;
         });
 
