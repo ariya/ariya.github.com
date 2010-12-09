@@ -1,0 +1,14 @@
+{
+  "name": "Box of Marbles",
+  "version": "1",
+  "icons": { "128": "128.png" },
+  "app": {
+    "urls": [
+      "http://ariya.github.com/js/marblebox/"
+    ],
+    "launch": {
+      "web_url": "http://ariya.github.com/js/marblebox/"
+    }
+  },
+  "permissions": []
+}
