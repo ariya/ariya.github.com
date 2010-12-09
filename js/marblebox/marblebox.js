@@ -143,7 +143,10 @@ function hslToRgb(h, s, l) {
 
 window.setTimeout(function () {
     var b = new Box(window.innerWidth, window.innerHeight);
-    b.addMarble(0, 0, 'yellow');
+
+    window.setTimeout(function () {
+        b.addMarble(0, 0, 'yellow');
+    }, 800);
 
     function randomColor() {
         var rgb = hslToRgb(Math.random(), 0.8, 0.5);
