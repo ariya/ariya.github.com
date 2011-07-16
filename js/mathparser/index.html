@@ -1,0 +1,73 @@
+<html>
+<head>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="viewport" content="width=device-width; maximum-scale=1.0; initial-scale=1.0; user-scalable=no">
+<title>Math expression parser</title>
+<style>
+body {
+    background-color: #ddd;
+    font-family: 'Helvetica Neue', HelveticaNeue, sans-serif;
+    text-shadow: white 0px 1px 1px;
+}
+
+pre {
+    text-shadow: none;
+}
+
+input {
+    width: 95%;
+    font-family: monospace;
+    font-size: 1.3em;
+    border: 1px solid #bbb;
+    border-radius: 0.5em;
+    padding: 0.2em 0.3em 0.2em 0.4em;
+    background-color: white;
+}
+
+table {
+    text-shadow: none;
+    background-color: #e6e6e6;
+    width: 70%;
+    margin-left: 20px;
+    border-collapse: collapse;
+}
+
+table td, table th {
+    padding: 0;
+}
+
+table td {
+    border: 1px solid #ccc;
+    padding: 3px;
+}
+
+.footer {
+    text-shadow: none;
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 2em;
+}
+</style>
+</head>
+<body>
+
+<p>Type a math expression:</p>
+<p><input type="text" id="code" autocapitalize="off" spellcheck="false"
+    value="x = 6 + 7" onChange='parse()' onKeyDown='parse()'></input>
+
+<p>Syntax tree:</p>
+<pre id="syntax"></pre>
+<p>Tokens:</p>
+<div id="tokens"></div>
+
+<p class="footer">Supported tested browsers: IE 7+, Firefox 4+, Safari 5+, Chrome 13+, Opera 11+.</p>
+
+<script src="TapDigit.js" type="text/javascript" charset="utf-8"></script>
+<script src="ParserTest.js" type="text/javascript" charset="utf-8"></script>
+<script>parse();</script>
+
+</body>
+
+
+</html>
