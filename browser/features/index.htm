@@ -1,0 +1,42 @@
+<html>
+<head><title>Modernizr feature detection</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width maximum-scale=1 initial-scale=1 user-scalable=no">
+<script src="../../lib/modernizr.js"></script>
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
+</head>
+<body>
+<h2>Detected features by Modernizr</h2>
+<p><b>Supported</b></p>
+<p id="supported"/>
+<p><b>Not supported</b></p>
+<p id="unsupported"/>
+<script>
+window.setTimeout(function() {
+    var feature, supported = [], unsupported = [];
+
+    for (feature in Modernizr) {
+        if (Modernizr.hasOwnProperty(feature)) {
+            if (feature[0] !== '_' && typeof Modernizr[feature] !== 'function' &&
+                feature !== 'input' && feature !== 'inputtypes') {
+                if (Modernizr[feature]) {
+                    supported.push(feature);
+                } else {
+                    unsupported.push(feature);
+                }
+            }
+        }
+    }
+
+    supported.forEach(function (e) {
+        document.getElementById('supported').innerHTML += ('' + e + '<br>');
+    });
+    unsupported.forEach(function (e) {
+        document.getElementById('unsupported').innerHTML += ('' + e + '<br>');
+    });
+
+    document.body.innerHTML += ('<p class=footer>Using Modernizr version ' + Modernizr._version + '</p>');
+}, 500);
+</script>
+</body>
+</html>
