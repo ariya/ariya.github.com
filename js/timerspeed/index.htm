@@ -4,24 +4,36 @@
 <meta name="viewport" content="width=device-width; initial-scale=1.0; user-scalable=no;">
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
 <script>
-var timer;
+var tickerId, updateId;
 
 function start() {
     var tick = 0,
-        el = document.getElementById('d');
-    timer = window.setInterval(function() {
-        document.getElementById('d').textContent = tick;
+        ref = Date.now(),
+        ticks = document.getElementById('d'),
+        time = document.getElementById('t'),
+        speed = document.getElementById('s');
+
+    tickerId = window.setInterval(function() {
         ++tick;
     }, 0);
+    updateId = window.setInterval(function() {
+        var elapsed = (Date.now() - ref) / 1000;
+        ticks.textContent = tick;
+        time.textContent = elapsed.toFixed(1);
+        speed.textContent  = (tick / elapsed).toFixed('1');
+    }, 200);
 }
 
 function stop() {
-    window.clearInterval(timer);
+    window.clearInterval(tickerId);;
+    window.clearInterval(updateId);
 }
 </script>
 <body>
-<div style="text-align: center">
-<p>Tick: <span id="d">0</span></p>
+<div style="text-align: left">
+<p>Time: <span id="t">0</span> secs<br>
+Ticks: <span id="d">0</span><br>
+<b>Speed: <span id="s">0</span> ticks/s</b></p>
 <input type="button" onclick="tick = 0; start()" value="Start">
 <input type="button" onclick="stop()" value="Stop">
 </div>
