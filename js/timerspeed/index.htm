@@ -2,23 +2,26 @@
 <head><title>Timer Speed</title></head>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="viewport" content="width=device-width; initial-scale=1.0; user-scalable=no;">
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
 <script>
-tick = 0;
+var timer;
 
-start = function() {
+function start() {
+    var tick = 0,
+        el = document.getElementById('d');
     timer = window.setInterval(function() {
         document.getElementById('d').textContent = tick;
         ++tick;
     }, 0);
 }
 
-stop  = function() {
-    clearInterval(timer);
+function stop() {
+    window.clearInterval(timer);
 }
 </script>
 <body>
 <div style="text-align: center">
-<p id="d">0</p>
+<p>Tick: <span id="d">0</span></p>
 <input type="button" onclick="tick = 0; start()" value="Start">
 <input type="button" onclick="stop()" value="Stop">
 </div>
