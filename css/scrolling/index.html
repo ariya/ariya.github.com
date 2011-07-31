@@ -1,0 +1,38 @@
+<html>
+<head><title>Scrolling text in 3-D</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width maximum-scale=1 initial-scale=1 user-scalable=no">
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
+<style>
+body {
+    background-color: black;
+}
+
+@-webkit-keyframes scroll
+{
+    0% {  -webkit-transform: translate(0, 350px); opacity: 1 }
+    100% { -webkit-transform: translate(0, -500px); opacity: 0 }
+}
+
+.scrolling {
+    color: #fcdf2b;
+    margin: 1em;
+    font-size: 1em;
+    text-shadow: none;
+    text-align: center;
+    -webkit-animation-name: scroll;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-duration: 7s;
+    -webkit-animation-timing-function: ease-out;
+}
+.container {
+    -webkit-transform: perspective(400) rotateX(30deg)
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <p class="scrolling">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<br><br>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+</div>
+</body>
+</html>
