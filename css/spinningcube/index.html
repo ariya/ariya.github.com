@@ -1,0 +1,93 @@
+<html>
+<head><title>Spinning 3-D cube</title>
+<meta name="viewport" content="width=device-width maximum-scale=1 initial-scale=1 user-scalable=no">
+<style type="text/css">
+body {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+#container {
+    width: 400px;
+    height: 200px;
+    position: absolute;
+    top: 100px;
+    left: -40px;
+    -webkit-perspective: 400;
+}
+
+@-webkit-keyframes rotating {
+0%    { -webkit-transform: rotateY(0deg); }
+50%   { -webkit-transform: rotateY(180deg); }
+100%  { -webkit-transform: rotateY(360deg); }
+}
+
+.cube {
+    height: 200px;
+    -webkit-transform-style: preserve-3d;
+    -webkit-animation-name: rotating;
+    -webkit-animation-duration: 7s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+}
+
+.side {
+    position: absolute;
+    left: 100px;
+    top: 0px;
+    width: 200px;
+    height: 200px;
+    background-color: rgba(192, 192, 192, 0.8);
+    border: 2px solid #888;
+    font-size: 24px;
+    color: #222;
+    text-align: center;
+    text-shadow: 0px 2px 1px white;
+}
+
+.side p {
+    margin-top: 60px;
+}
+
+#control {
+    display: none;
+    position: absolute;
+    top: 430px;
+    left: 50px;
+}
+
+input {
+    margin-left: 20px;
+    border: 1px solid #555;
+    padding: 0.5em;
+    background: #fff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc));
+    border-radius: 0.5em;
+}
+</style>
+<script>
+function adjustSpeed(factor)
+{
+    var el = document.getElementById('c'),
+        duration = parseFloat(el.style.webkitAnimationDuration);
+    el.style.webkitAnimationDuration = (duration / factor) + 's';
+}
+</script>
+</head>
+<body>
+<div id="container">
+    <div id="c" class="cube" style="-webkit-animation-duration: 2s">
+        <div class="side" style="-webkit-transform: rotateY(0deg) translateZ(100px);"><p>Spinning cube</p></div>
+        <div class="side" style="-webkit-transform: rotateY(90deg) translateZ(100px);"><p>No JavaScript!</p></div>
+        <div class="side" style="-webkit-transform: rotateY(180deg) translateZ(100px);"><p>and keyframe animation</p></div>
+        <div class="side" style="-webkit-transform: rotateY(270deg) translateZ(100px);"><p>with CSS transform</p></div>
+    </div>
+</div>
+<div id="control">
+    <input type="button" value="Faster" onclick="adjustSpeed(1.25)">
+    <input type="button" value="Slower" onclick="adjustSpeed(0.8)">
+</div>
+</body>
+</html>
