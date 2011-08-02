@@ -1,0 +1,123 @@
+<html><head><title>browser viewport</title>
+<meta id="viewport" name="viewport" content="width=device-width target-densityDpi=device-dpi initial-scale=0.5 user-scalable=no maximum-scale=0.5">
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+#left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50px;
+    height: 60px;
+    background: url(arrow.png) no-repeat 0 0;
+}
+
+#right {
+    position: absolute;
+    left: 100px;
+    top: 0;
+    width: 50px;
+    height: 60px;
+    background: url(arrow.png) no-repeat -152px 0;
+}
+
+#span {
+    position: absolute;
+    left: 50px;
+    top: 20;
+    text-align: center;
+}
+
+#box {
+    position: absolute;
+    top: 80px;
+    width: 100px;
+    height: 100px;
+    background-color: green;
+    border: 2px solid #333;
+}
+
+#info {
+    position: absolute;
+    padding: 20px;
+    top: 170px;
+}
+</style>
+<script>
+</script>
+</head>
+<body>
+    <div id="left"></div>
+    <div id="span">...</div>
+    <div id="right"></div>
+    <div id="box"></div>
+    <div id="info"><p>The above arrow indicator should align exactly
+        to the left and right edge of the screen. The green square box (100px)
+        should be perfectly centered.
+        In this setup, one CSS pixel (&quot;px&quot;) must equal
+        one physical screen pixel.</p>
+        <p id="dim"></p>
+    </div>
+<script>
+function showInfo(width, height) {
+    var el;
+
+    el = document.getElementById('right');
+    el.style.left = (width - 50) + 'px';
+
+    el = document.getElementById('span');
+    el.style.width = (width - 100) + 'px';
+    el.textContent = 'This should be ' + width + 'px';
+
+    el = document.getElementById('box');
+    el.style.left = (0.5 * (width - 100)) + 'px';
+
+    el = document.getElementById('dim');
+    el.innerHTML = '<b>screen width height</b>: ' +
+        screen.width + 'x' + screen.height + '<br>' +
+        '<b>window innerWidth innerHeight</b>: ' +
+        window.innerWidth + 'x' + window.innerHeight + '<br>' +
+        '<b>window.devicePixelRatio</b>: ' + window.devicePixelRatio + '<br><br>' +
+        '<b>true viewport</b>: ' + width + 'x' + height + '<br>' + 
+        document.getElementById('viewport').getAttribute('content');
+}
+
+window.onload = function () {
+    var el;
+
+    width = window.innerWidth;
+    height = window.innerHeight;
+
+    if (window.devicePixelRatio === 1) {
+        if (window.innerWidth === 2 * screen.width ||
+            window.innerWidth === 2 * screen.height) {
+            el = document.getElementById('viewport');
+            el.setAttribute('content', 'width=device-width target-densityDpi=device-dpi ' + 
+                'initial-scale=1 maximum-scale=1 user-scalable=no');
+            document.head.appendChild(el);
+            width = window.innerWidth;
+            height = window.innerHeight;
+            if (width === 2 * screen.width) {
+                width /= 2;
+                height /= 2;
+            }
+        }
+    }
+
+    el = document.getElementById('right');
+    el.style.left = (width - 50) + 'px';
+
+    el = document.getElementById('span');
+    el.style.width = (width - 100) + 'px';
+    el.textContent = 'This should be ' + width + 'px';
+
+    el = document.getElementById('box');
+    el.style.left = (0.5 * (width - 100)) + 'px';
+}
+</script>
+</body>
+</html>
