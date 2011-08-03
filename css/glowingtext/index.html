@@ -4,6 +4,12 @@
 <meta name="viewport" content="width=device-width maximum-scale=1 initial-scale=1 user-scalable=no">
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
 <style>
+@-webkit-keyframes glow
+{
+    0% { text-shadow: 0 0 2px white, 0 0 2px white; }
+    50% { text-shadow: 0 0 20px white, 0 0 50px white; }
+    100% { text-shadow: 0 0 2px white, 0 0 2px white; }
+}
 body {
    background-color: #333;
 }
@@ -11,9 +17,14 @@ body {
 .glowing {
     color: #eee;
     font-size: 2em;
+    font-weight: bold;
     margin: 1.2em;
     text-align: center;
     text-shadow: 0 0 5px white, 0 0 10px white;
+    -webkit-animation-name: glow;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-timing-function: linear;
 }
 </style>
 <body>
