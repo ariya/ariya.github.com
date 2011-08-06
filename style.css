@@ -7,8 +7,6 @@ body {
 h1 {
     font-size: 1.2em;
     text-align: center;
-    background-color: #ddd;
-    border-radius: 0.6em;
 }
 
 h2 {
@@ -26,6 +24,18 @@ p, li {
     font-size: 1em;
     line-height: 1.4em;
 }
+
+.header {
+    text-align: center;
+    font-size: 0.8em;
+}
+
+.header span {
+    background-color: #dbdbdb;
+    border-radius: 0.6em;
+    padding: 0.4em;
+}
+
 .footer {
     text-align: center;
     font-size: 0.8em;
