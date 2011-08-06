@@ -1,5 +1,6 @@
 <html><head><title>Detect support for touch events</title>
 <meta name="viewport" content="width=device-width maximum-scale=1 initial-scale=1 user-scalable=no">
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
 <script>
 supportTouch = function () {
     var s = false;
@@ -14,9 +15,13 @@ supportTouch = function () {
 };
 </script>
 <body>
+<p>Support touch events: <b><span id="i">No</span></b>.</p>
+<p class="footer" id="ua"></p>
 <script>
-document.write('<p>Support touch events: <b>' + supportTouch() + '</b>.</p>');
-document.write('<p>User agent: ' + navigator.userAgent + '</p>');
+window.onload = function () {
+    document.getElementById('i').textContent = supportTouch();
+    document.getElementById('ua').textContent = 'User agent: ' + navigator.userAgent;
+};
 </script>
 </body>
 </html>
