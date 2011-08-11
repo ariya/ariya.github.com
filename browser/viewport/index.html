@@ -87,7 +87,12 @@ function showInfo(width, height) {
 }
 
 window.onload = function () {
-    var el;
+    var el, head;
+
+    head = document.head;
+    if (typeof head === 'undefined') {
+        head = document.getElementsByTagName('head')[0];
+    }
 
     width = window.innerWidth;
     height = window.innerHeight;
@@ -98,7 +103,7 @@ window.onload = function () {
             el = document.getElementById('viewport');
             el.setAttribute('content', 'width=device-width target-densityDpi=device-dpi ' + 
                 'initial-scale=1 maximum-scale=1 user-scalable=no');
-            document.head.appendChild(el);
+            head.appendChild(el);
             width = window.innerWidth;
             height = window.innerHeight;
             if (width === 2 * screen.width) {
