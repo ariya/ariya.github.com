@@ -1,0 +1,173 @@
+<html>
+<head><title>Animation continuity</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width maximum-scale=1 initial-scale=1 user-scalable=no">
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
+<style>
+p {
+  font-size: 0.9em;
+  line-height: 1.2em;
+}
+
+@-webkit-keyframes redbox {
+  0% {
+    -webkit-transform: translate(0, 0);
+  }
+  100% {
+    -webkit-transform: translate(200px, 0);
+  }
+}
+
+@-webkit-keyframes darkblue {
+  0% {
+    -webkit-transform: translate(0, 0);
+  }
+  100% {
+    -webkit-transform: translate(100px, 0);
+  }
+}
+
+@-webkit-keyframes lightblue {
+  0% {
+    -webkit-transform: translate(0, 0);
+  }
+  100% {
+    -webkit-transform: translate(100px, 0);
+  }
+}
+
+#red {
+  position: absolute;
+  top: 200px;
+  left: 20px;
+  width: 30;
+  height: 30;
+  background-color: red;
+  -webkit-animation-name: redbox;
+  -webkit-animation-duration: 4s;
+  -webkit-animation-delay: 0s;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+}
+
+#red-frame {
+  position: absolute;
+  top: 199px;
+  left: 20px;
+  width: 230px;
+  height: 30;
+  background-color: #eee;
+  border: 1px solid #ccc;
+}
+
+#darkblue {
+  position: absolute;
+  top: 250px;
+  left: 20px;
+  width: 30;
+  height: 30;
+  background-color: blue;
+}
+
+#darkblue.run {
+  -webkit-animation-name: darkblue;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-delay: 0s;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation-timing-function: linear;
+}
+
+#lightblue {
+  position: absolute;
+  top: 250px;
+  left: 120px;
+  width: 30;
+  height: 30;
+  background-color: lightblue;
+  opacity: 0;
+}
+
+#lightblue.run {
+  opacity: 1;
+  -webkit-animation-name: lightblue;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-delay: 0s;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation-timing-function: linear;
+}
+
+#blue-frame {
+  position: absolute;
+  top: 249px;
+  left: 20px;
+  width: 230px;
+  height: 30;
+  background-color: #eee;
+  border: 1px solid #ccc;
+}
+
+#guideline {
+  position: absolute;
+  top: 190px;
+  left: 50px;
+  width: 3px;
+  height: 100px;
+  background-color: #333;
+  -webkit-animation-name: redbox;
+  -webkit-animation-duration: 4s;
+  -webkit-animation-delay: 0s;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+}
+</style>
+<script>
+function setupHandlers() {
+    var timestamp = Date.now();
+
+    function id(name) {
+        return document.getElementById(name);
+    }
+
+    id('red').addEventListener('webkitAnimationStart', function() {
+        timestamp = Date.now();
+    });
+
+    id('darkblue').addEventListener('webkitAnimationEnd', function() {
+        id('darkblue').setAttribute('class', '');
+        id('darkblue').style.opacity = '0';
+        id('lightblue').setAttribute('class', 'run');
+        id('lightblue').style.opacity = '1';
+    });
+
+    id('lightblue').addEventListener('webkitAnimationEnd', function() {
+        id('darkblue').setAttribute('class', 'run');
+        id('darkblue').style.opacity = '1';
+        id('lightblue').setAttribute('class', '');
+        id('lightblue').style.opacity = '0';
+    });
+
+    id('darkblue').addEventListener('webkitAnimationStart', function() {
+        var now = Date.now(),
+            duration = 4000,
+            elapsed = now - timestamp,
+            runs = Math.floor(elapsed / duration);
+        id('delay').textContent = elapsed - runs * duration;
+    });
+}
+</script>
+</head>
+<body onload="setupHandlers()">
+<div id="red-frame"></div>
+<div id="red"></div>
+<div id="blue-frame"></div>
+<div id="darkblue" class="run"></div>
+<div id="lightblue"></div>
+<div id="guideline"></div>
+<p>Both boxes should move infinitely from left to right.</p>
+<p>The blue version actually consists of two different boxes (light and dark).
+The transition between is triggered via <tt>webkitAnimationEnd</tt> event and a simple handler code.</p>
+<p>Red vs blue discrepancy delay: <span id="delay">--</span> ms.</p>
+</body>
+</html>
