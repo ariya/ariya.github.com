@@ -1,6 +1,26 @@
 <html><head><title>Demos by Ariya Hidayat</title>
 <meta name="viewport" content="width=device-width maximum-scale=1 initial-scale=1 user-scalable=no">
 <link rel="stylesheet" type="text/css" href="style.css"/>
+<script>
+function hideAddressBar() {
+    window.setTimeout(function () {
+        window.scrollTo(0, 1);
+
+        // Android workaround
+        window.setTimeout(function () {
+            if (window.scrollY <= 0) {
+                window.setTimeout(function () {
+                    window.scrollTo(0, 1);
+                }, 300);
+            }
+        }, 100);
+    }, 0);
+}
+
+window.addEventListener("load", function () {
+    hideAddressBar();
+});
+</script>
 </head>
 <body>
 
