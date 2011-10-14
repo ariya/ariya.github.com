@@ -1,6 +1,5 @@
 /*
   This file is part of the Ofi Labs X2 project.
-
   Copyright (C) 2011 Ariya Hidayat <ariya.hidayat@gmail.com>
 
   Redistribution and use in source and binary forms, with or without

@@ -46,7 +46,7 @@ function KineticModel() {
 
     function nop() {}
 
-    this.duration = 2400;
+    this.duration = 1950;
     this.position = 0;
     this.updateInterval = 1000 / 60;
 
