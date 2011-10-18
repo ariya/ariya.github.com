@@ -39,11 +39,13 @@ window.setTimeout(function () {
     if ('ondeviceorientation' in window) {
 
         window.addEventListener('deviceorientation', function(e) {
-            var direction = e.alpha,
-                delta;
+            var direction, delta;
 
             if (typeof e.webkitCompassHeading !== 'undefined') {
                 direction = e.webkitCompassHeading;
+            } else {
+                // http://dev.w3.org/geo/api/spec-source-orientation.html#deviceorientation
+                direction = 360 - e.alpha;
             }
 
             delta = Math.round(direction) - ref;
