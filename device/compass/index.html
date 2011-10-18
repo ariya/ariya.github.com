@@ -2,6 +2,7 @@
 <link rel="apple-touch-icon" href="compass-icon.png"/>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="viewport" content="width=device-width maximum-scale=1 initial-scale=1 user-scalable=no">
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
 <style>
 body {
     margin: 0;
@@ -55,6 +56,8 @@ window.setTimeout(function () {
             if (delta > 180)
                 delta -= 360;
             dir += delta;
+
+            document.getElementById('status').textContent = dir + '\u00b0';
         });
 
         window.setInterval(function() {
