@@ -67,6 +67,7 @@ window.setTimeout(function () {
             while (heading < 0) {
                 heading += 360;
             }
+            heading = Math.round(heading);
             document.getElementById('status').textContent = 'Heading: ' + heading + '\u00b0';
         });
 
