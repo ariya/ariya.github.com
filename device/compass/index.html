@@ -40,7 +40,7 @@ window.setTimeout(function () {
     if ('ondeviceorientation' in window) {
 
         window.addEventListener('deviceorientation', function(e) {
-            var direction, delta;
+            var direction, delta, heading;
 
             if (typeof e.webkitCompassHeading !== 'undefined') {
                 direction = e.webkitCompassHeading;
@@ -60,7 +60,14 @@ window.setTimeout(function () {
                 delta -= 360;
             dir += delta;
 
-            document.getElementById('status').textContent = dir + '\u00b0';
+            heading = direction;
+            while (heading >= 360) {
+                heading -= 360;
+            }
+            while (heading < 0) {
+                heading += 360;
+            }
+            document.getElementById('status').textContent = 'Heading: ' + heading + '\u00b0';
         });
 
         window.setInterval(function() {
