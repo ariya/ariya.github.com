@@ -72,7 +72,8 @@ window.setTimeout(function () {
         });
 
         window.setInterval(function() {
-            document.getElementById('compass').style.webkitTransform = 'rotate(' + dir + 'deg)';
+            var angle = -dir;
+            document.getElementById('compass').style.webkitTransform = 'rotate(' + angle + 'deg)';
         }, 100);
 
         document.getElementById('compass').style.width = Math.min(screen.width, screen.height) + 'px';
