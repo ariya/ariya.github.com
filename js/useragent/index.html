@@ -1,19 +1,31 @@
 <html><head><title>navigator object</title>
 <meta name="viewport" content="width=device-width maximum-scale=1 initial-scale=1 user-scalable=no">
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
-<body style="overflow: hidden">
-<div style="height: 120%; width: 120%"><p>Hold on a second...</p></div>
 <script>
-window.setTimeout(function() {
+function getUA() {
     var str = '';
     str += '<p><b>navigator.platform</b>: ' + navigator.platform + '<br>';
     str += '<b>navigator.userAgent</b>: ' + navigator.userAgent + '</p>';
+    return str;
+}
+function getInfo() {
+    var str = '';
     str += '<p><b>screen.width</b>: ' + screen.width + '<br>';
     str += '<b>screen.height</b>: ' + screen.height + '</p>';
     str += '<p><b>window.innerWidth</b>: ' + window.innerWidth + '<br>';
     str += '<b>window.innerHeight</b>: ' + window.innerHeight + '</p>';
     str += '<p><b>window.devicePixelRatio</b>: ' + window.devicePixelRatio + '</p>';
-    document.body.innerHTML = str;
+    return str;
+}
+</script>
+<body style="overflow: hidden">
+<div style="height: 120%; width: 120%" id="ua">
+<p>Hold on a second...</p></div>
+<script>
+document.getElementById('ua').innerHTML = '<p>Immediate info:</p>' + getUA();
+window.setTimeout(function() {
+    document.getElementById('ua').innerHTML += '<p>After 500 ms:</p>' + getUA();
+    document.getElementById('ua').innerHTML += getInfo();
 }, 500);
 </script>
 </body>
