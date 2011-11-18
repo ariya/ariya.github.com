@@ -1,0 +1,32 @@
+<html>
+<head><title>Geolocation</title>
+<meta name="viewport" content="width=device-width maximum-scale=1 initial-scale=1 user-scalable=no">
+<link rel="stylesheet" type="text/css" href="../../style.css"/>
+</head>
+<body>
+<h2>Geolocation</h2>
+<p id="progress">Please wait...</p>
+<p>Latitude: <span id="latitude">unknown</span><br>
+Longitude: <span id="longitude">unknown</span></p>
+<script>
+var el = document.getElementById('progress'),
+    latitude = document.getElementById('latitude'),
+    longitude = document.getElementById('longitude');
+
+if (navigator.geolocation) {
+    el.textContent = 'Location is obtained.';
+    window.onload = function() {
+        navigator.geolocation.watchPosition(function (position) {
+            console.log(position);
+            latitude.textContent = position.coords.latitude.toFixed(2);
+            longitude.textContent = position.coords.longitude.toFixed(2);
+        }, function (error) {
+            el.textContent = 'Error: ' + error;
+        });
+    };
+} else {
+    el.textContent = 'Sorry! Your browser does not support geolocation.';
+}
+</script>
+</body>
+</html>
