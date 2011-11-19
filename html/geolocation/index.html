@@ -2,24 +2,39 @@
 <head><title>Geolocation</title>
 <meta name="viewport" content="width=device-width maximum-scale=1 initial-scale=1 user-scalable=no">
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 </head>
 <body>
 <h2>Geolocation</h2>
 <p id="progress">Please wait...</p>
 <p>Latitude: <span id="latitude">unknown</span><br>
 Longitude: <span id="longitude">unknown</span></p>
+<p>Approximate address: <span id="geocode">unavailable</span></p>
 <script>
 var el = document.getElementById('progress'),
     latitude = document.getElementById('latitude'),
-    longitude = document.getElementById('longitude');
+    longitude = document.getElementById('longitude'),
+    geocode = document.getElementById('geocode');
+
 
 if (navigator.geolocation) {
     el.textContent = 'Location is obtained.';
     window.onload = function() {
+        var geocoder = new google.maps.Geocoder();
         navigator.geolocation.watchPosition(function (position) {
-            console.log(position);
+            var pos = new google.maps.LatLng(position.coords.latitude,
+                position.coords.longitude);
             latitude.textContent = position.coords.latitude.toFixed(2);
             longitude.textContent = position.coords.longitude.toFixed(2);
+            geocoder.geocode({'latLng': pos}, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results.length && results[0].formatted_address) {
+                        geocode.textContent = results[0].formatted_address;
+                    }
+                } else {
+                    geocode.textContent = 'unavailable (' + status + ')';
+                }
+            });
         }, function (error) {
             el.textContent = 'Error: ' + error;
         });
