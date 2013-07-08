@@ -13,7 +13,7 @@
 Longitude: <span id="longitude">unknown</span><br>
 Accuracy: <span id="accuracy">unknown</span></p>
 <p>Approximate address: <span id="geocode">unavailable</span></p>
-<p id="map" style="height: 240px;"></p>
+<p id="map" style="height: 280px;"></p>
 <script>
 var el = document.getElementById('progress'),
     latitude = document.getElementById('latitude'),
@@ -34,8 +34,9 @@ if (navigator.geolocation) {
             longitude.textContent = coords.longitude.toFixed(2);
             accuracy.textContent = (coords.accuracy/1000).toFixed(1) + ' km';
 
+            map.zoomControl.setPosition('bottomright');
             L.tileLayer('http://{s}.tile.cloudmade.com/031678dbee074a098a6da2d1bad30438/997/256/{z}/{x}/{y}.png', {
-                attribution: 'Map data &copy; <a href="http://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy <a href="http://cloudmade.com/">CloudMade</a>.',
+                attribution: 'Map data &copy; <a href="http://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a><br>Imagery &copy <a href="http://cloudmade.com/">CloudMade</a>.',
                 maxZoom: 18
             }).addTo(map);
 
