@@ -3,6 +3,8 @@
 <meta name="viewport" content="width=device-width maximum-scale=1 initial-scale=1 user-scalable=no">
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+<link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet-0.6/leaflet.css"/>
+<script src="http://cdn.leafletjs.com/leaflet-0.6/leaflet.js"></script>
 </head>
 <body>
 <h2>Geolocation</h2>
@@ -11,6 +13,7 @@
 Longitude: <span id="longitude">unknown</span><br>
 Accuracy: <span id="accuracy">unknown</span></p>
 <p>Approximate address: <span id="geocode">unavailable</span></p>
+<p id="map" style="height: 240px;"></p>
 <script>
 var el = document.getElementById('progress'),
     latitude = document.getElementById('latitude'),
@@ -23,22 +26,31 @@ if (navigator.geolocation) {
     window.onload = function() {
         var geocoder = new google.maps.Geocoder();
         navigator.geolocation.watchPosition(function (position) {
-            var pos = new google.maps.LatLng(position.coords.latitude,
-                position.coords.longitude);
-            latitude.textContent = position.coords.latitude.toFixed(2);
-            longitude.textContent = position.coords.longitude.toFixed(2);
-            accuracy.textContent = (position.coords.accuracy/1000).toFixed(1) + ' km';
+            var coords = position.coords,
+                pos = new google.maps.LatLng(coords.latitude, coords.longitude),
+                map = L.map('map').setView([coords.latitude, coords.longitude], 11);
+
+            latitude.textContent = coords.latitude.toFixed(2);
+            longitude.textContent = coords.longitude.toFixed(2);
+            accuracy.textContent = (coords.accuracy/1000).toFixed(1) + ' km';
+
+            L.tileLayer('http://{s}.tile.cloudmade.com/031678dbee074a098a6da2d1bad30438/997/256/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="http://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy <a href="http://cloudmade.com/">CloudMade</a>.',
+                maxZoom: 18
+            }).addTo(map);
+
             geocoder.geocode({'latLng': pos}, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     if (results.length && results[0].formatted_address) {
                         geocode.textContent = results[0].formatted_address;
+                        L.popup().setLatLng([coords.latitude, coords.longitude]).setContent(results[0].formatted_address).addTo(map);
                     }
                 } else {
                     geocode.textContent = 'unavailable (' + status + ')';
                 }
             });
         }, function (error) {
-            el.textContent = 'Error: ' + error;
+            el.textContent = 'Error: ' + error.toMessage();
         }, {
             enableHighAccuracy: true,
             timeout: 30 * 1000,        // 30 secs
