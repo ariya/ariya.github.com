@@ -37,6 +37,10 @@ if (navigator.geolocation) {
             });
         }, function (error) {
             el.textContent = 'Error: ' + error;
+        }, {
+            enableHighAccuracy: true,
+            timeout: 30 * 1000,        // 30 secs
+            maximumAge: 5 * 60 * 1000, // 5 mins
         });
     };
 } else {
