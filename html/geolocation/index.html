@@ -8,7 +8,8 @@
 <h2>Geolocation</h2>
 <p id="progress">Please wait...</p>
 <p>Latitude: <span id="latitude">unknown</span><br>
-Longitude: <span id="longitude">unknown</span></p>
+Longitude: <span id="longitude">unknown</span><br>
+Accuracy: <span id="accuracy">unknown</span></p>
 <p>Approximate address: <span id="geocode">unavailable</span></p>
 <script>
 var el = document.getElementById('progress'),
@@ -26,6 +27,7 @@ if (navigator.geolocation) {
                 position.coords.longitude);
             latitude.textContent = position.coords.latitude.toFixed(2);
             longitude.textContent = position.coords.longitude.toFixed(2);
+            accuracy.textContent = (position.coords.accuracy/1000).toFixed(1) + ' km';
             geocoder.geocode({'latLng': pos}, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     if (results.length && results[0].formatted_address) {
