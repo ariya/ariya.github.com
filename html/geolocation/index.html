@@ -44,7 +44,7 @@ if (navigator.geolocation) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     if (results.length && results[0].formatted_address) {
                         geocode.textContent = results[0].formatted_address;
-                        L.popup().setLatLng([coords.latitude, coords.longitude]).setContent(results[0].formatted_address).addTo(map);
+                        L.marker([coords.latitude, coords.longitude]).addTo(map).bindPopup(results[0].formatted_address);
                     }
                 } else {
                     geocode.textContent = 'unavailable (' + status + ')';
