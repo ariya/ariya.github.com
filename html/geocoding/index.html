@@ -1,43 +1,45 @@
 <html>
-<head><title>Geolocation</title>
+<head><title>Geocoding</title>
 <meta name="viewport" content="width=device-width maximum-scale=1 initial-scale=1 user-scalable=no">
 <link rel="stylesheet" type="text/css" href="../../style.css"/>
-<link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet-0.6/leaflet.css"/>
-<script src="http://cdn.leafletjs.com/leaflet-0.6/leaflet.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 </head>
 <body>
-<h2>Geolocation</h2>
+<h2>Reverse Geocoding</h2>
 <p id="progress">Please wait...</p>
 <p>Latitude: <span id="latitude">unknown</span><br>
 Longitude: <span id="longitude">unknown</span><br>
 Accuracy: <span id="accuracy">unknown</span></p>
-<p><input id="geocode" type="button" disabled value="Find approximate address" onclick="location='../geocoding/'"/>
+<p>Approximate address: <span id="geocode">unavailable</span></p>
 <p id="map" style="height: 280px;"></p>
 <script>
 var el = document.getElementById('progress'),
     latitude = document.getElementById('latitude'),
-    longitude = document.getElementById('longitude');
+    longitude = document.getElementById('longitude'),
+    geocode = document.getElementById('geocode');
+
 
 if (navigator.geolocation) {
-    document.getElementById('geocode').disabled = false;
+    el.textContent = 'Location is obtained.';
     window.onload = function() {
+        var geocoder = new google.maps.Geocoder();
         navigator.geolocation.watchPosition(function (position) {
             var coords = position.coords,
-                map = L.map('map').setView([coords.latitude, coords.longitude], 11);
-
-            el.textContent = 'Location is obtained.';
-            document.getElementById('geocode').disabled = false;
+                pos = new google.maps.LatLng(coords.latitude, coords.longitude);
 
             latitude.textContent = coords.latitude.toFixed(2);
             longitude.textContent = coords.longitude.toFixed(2);
             accuracy.textContent = (coords.accuracy/1000).toFixed(1) + ' km';
 
-            map.zoomControl.setPosition('bottomright');
-            L.tileLayer('http://{s}.tile.cloudmade.com/031678dbee074a098a6da2d1bad30438/997/256/{z}/{x}/{y}.png', {
-                attribution: 'Map data &copy; <a href="http://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a><br>Imagery &copy <a href="http://cloudmade.com/">CloudMade</a>.',
-                maxZoom: 18
-            }).addTo(map);
-            L.marker([coords.latitude, coords.longitude]).addTo(map).bindPopup('You are here');
+            geocoder.geocode({'latLng': pos}, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results.length && results[0].formatted_address) {
+                        geocode.textContent = results[0].formatted_address;
+                    }
+                } else {
+                    geocode.textContent = 'unavailable (' + status + ')';
+                }
+            });
         }, function (error) {
             el.textContent = 'Error: ' + error.toMessage();
         }, {
