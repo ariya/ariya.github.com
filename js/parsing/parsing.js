@@ -98,7 +98,7 @@ function runOther() {
     window.tree = [];
 
     fn = function () {
-        var syntax = window.parse(window.data);
+        var syntax = UglifyJS.parse(window.data);
         window.tree.push(syntax.body.length);
     };
 
